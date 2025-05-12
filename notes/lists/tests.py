@@ -47,19 +47,19 @@ class HomePageTest(TestCase):
         self.client.get('/')
         self.assertEqual(Item.objects.count(),0)
 
-    def test_displays_all_list_items(self):
-        Item.objects.create(text='itemey 1')
-        Item.objects.create(text='itemey 2')
+    # def test_displays_all_list_items(self):
+    #     Item.objects.create(text='itemey 1')
+    #     Item.objects.create(text='itemey 2')
 
-        response = self.client.get('/')
+    #     response = self.client.get('/')
 
-        self.assertIn('itemey 1',response.content.decode())
-        self.assertIn('itemey 2',response.content.decode())
+    #     self.assertIn('itemey 1',response.content.decode())
+    #     self.assertIn('itemey 2',response.content.decode())
 class ListViewTest(TestCase):
-    def test_uses_list_template(self):
-        response = self.client.get('/lists/the-new-page/')
-        self.assertTemplateUsed(response,'list.html')
-    def test_displays_all_items(self):
+    # def test_uses_list_template(self):
+        # response = self.client.get('/lists/the-new-page/')
+        # self.assertTemplateUsed(response,'list.html')
+    def test_displays_all_list_items(self):
         Item.objects.create(text='itemey 1')
         Item.objects.create(text='itemey 2')
 
@@ -67,3 +67,6 @@ class ListViewTest(TestCase):
 
         self.assertContains(response,'itemey 1')
         self.assertContains(response,'itemey 2')
+    def test_use_list_template(self):
+        response = self.client.get('/lists/the-new-page/')
+        self.assertTemplateUsed(response,'list.html')
