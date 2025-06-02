@@ -11,25 +11,33 @@ from selenium.common.exceptions import WebDriverException
 # django.setup()
 MAX_WAIT = 10
 
-from lists.models import Item
-class ItemModelTest(LiveServerTestCase):
-    def test_saving_and_retrieving_items(self):
-        # first_item = Item()
-        # first_item.text = 'The first list item'
-        # first_item.save()
+from lists.models import Item,List
+# class ListAndItemModelsTest(LiveServerTestCase):
+#     def test_saving_and_retrieving_items(self):
+#         # list_user = List()
+#         # list_user.save()
+#         # first_item = Item()
+#         # first_item.text = 'The first list item'
+#         # first_item.list = list_user
+#         # first_item.save()
 
-        # second_item = Item()
-        # second_item.text = 'Item the second'
-        # second_item.save()
-        
-        # saved_items = Item.objects.all()
-        # self.assertEqual(saved_items.count(),2)
+#         # second_item = Item()
+#         # second_item.text = 'Item the second'
+#         # second_item.list = list_user
+#         # second_item.save()
 
-        # first_saved_item = saved_items[0]
-        # second_saved_item = saved_items[1]
-        # self.assertEqual(first_saved_item.text,'The first list item')
-        # self.assertEqual(second_saved_item.text,'Item the second')
-        pass
+#         # saved_list = List.objects.first()
+#         # self.assertEqual(saved_list,list_user)
+#         # saved_items = Item.objects.all()
+#         # self.assertEqual(saved_items.count(),2)
+
+#         # first_saved_item = saved_items[0]
+#         # second_saved_item = saved_items[1]
+#         # self.assertEqual(first_saved_item.text,'The first list item')
+#         # self.assertEqual(first_saved_item.list,list_user)
+#         # self.assertEqual(second_saved_item.text,'Item the second')
+#         # self.assertEqual(second_saved_item.list,list_user)
+        # pass
 class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Chrome()
@@ -47,41 +55,41 @@ class NewVisitorTest(LiveServerTestCase):
                 table = self.browser.find_element(By.ID,'id_list_table')
                 rows=table.find_elements(By.TAG_NAME,'tr')
                 self.assertIn(row_text,[row.text for row in rows])
-                break
-            except (AssertionError,WebDriverException) as e:
+                return
+            except (AssertionError, WebDriverException) as e:
                 if time.time() - start_time > MAX_WAIT:
                     raise e
                 time.sleep(0.5)
-    # def test_can_start_a_list_and_retrieve_it_later(self):
-    #     # self.browser.get('http://localhost:8000')
-    #     self.browser.get(self.live_server_url)
-    #     self.assertIn('To-Do', self.browser.title) , "Browser title was " + self.browser.title
-    #     header_text = self.browser.find_element(By.TAG_NAME,'h1').text
-    #     self.assertIn('To-Do',header_text)
-    #     inputbox = self.browser.find_element(By.ID,'id_new_item')
-    #     self.assertEqual(inputbox.get_attribute('placeholder'),'Enter a to-do item')
-    #     inputbox.send_keys('Buy flowers')
-    #     inputbox.send_keys(Keys.ENTER)
-    #     self.wait_for_row_in_list_table('1:Buy flowers')
-    #     # time.sleep(1)
+    def test_can_start_a_list_and_retrieve_it_later(self):
+        # self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
+        # self.assertIn('To-Do', self.browser.title) , "Browser title was " + self.browser.title
+        # header_text = self.browser.find_element(By.TAG_NAME,'h1').text
+        # self.assertIn('To-Do',header_text)
+        inputbox = self.browser.find_element(By.ID,'id_new_item')
+        # self.assertEqual(inputbox.get_attribute('placeholder'),'Enter a to-do item')
+        inputbox.send_keys('Buy flowers')
+        inputbox.send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table('1:Buy flowers')
+        # time.sleep(1)
 
-    #     inputbox = self.browser.find_element(By.ID,'id_new_item')
-    #     inputbox.send_keys('Give a gift to Lisi')
-    #     inputbox.send_keys(Keys.ENTER)
-    #     # time.sleep(1)
+        inputbox = self.browser.find_element(By.ID,'id_new_item')
+        inputbox.send_keys('Give a gift to Lisi')
+        inputbox.send_keys(Keys.ENTER)
+        # time.sleep(1)
         
-    #     self.wait_for_row_in_list_table('1:Buy flowers')
-    #     self.wait_for_row_in_list_table('2:Give a gift to Lisi')
+        self.wait_for_row_in_list_table('1:Buy flowers')
+        self.wait_for_row_in_list_table('2:Give a gift to Lisi')
 
-    #     table = self.browser.find_element(By.ID,'id_list_table')
-    #     rows=table.find_elements(By.TAG_NAME,'tr')
-    #     self.assertIn('1:Buy flowers',[row.text for row in rows])
-    #     self.assertIn('2:Give a gift to Lisi', [row.text for row in rows])
+        # table = self.browser.find_element(By.ID,'id_list_table')
+        # rows=table.find_elements(By.TAG_NAME,'tr')
+        # self.assertIn('1:Buy flowers',[row.text for row in rows])
+        # self.assertIn('2:Give a gift to Lisi', [row.text for row in rows])
         
-    #     # self.check_for_row_in_list_table('1:Buy flowers')
-    #     # self.check_for_row_in_list_table('2:Give a gift to Lisi')
+        # self.check_for_row_in_list_table('1:Buy flowers')
+        # self.check_for_row_in_list_table('2:Give a gift to Lisi')
 
-    #     self.fail('Finish the test!')
+        self.fail('Finish the test!')
     def test_multiple_users_can_start_lists_at_different_urls(self):
         self.browser.get(self.live_server_url)
         inputbox = self.browser.find_element(By.ID,'id_new_item')
