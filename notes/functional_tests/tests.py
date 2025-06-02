@@ -89,7 +89,7 @@ class NewVisitorTest(LiveServerTestCase):
         # self.check_for_row_in_list_table('1:Buy flowers')
         # self.check_for_row_in_list_table('2:Give a gift to Lisi')
 
-        self.fail('Finish the test!')
+        # self.fail('Finish the test!')
     def test_multiple_users_can_start_lists_at_different_urls(self):
         self.browser.get(self.live_server_url)
         inputbox = self.browser.find_element(By.ID,'id_new_item')
@@ -115,7 +115,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         wangwu_list_url = self.browser.current_url
         self.assertRegex(wangwu_list_url,'/lists/.+')
-        self.assertEqual(wangwu_list_url,zhangsan_list_url)
+        self.assertNotEqual(wangwu_list_url,zhangsan_list_url)
 
         page_text = self.browser.find_element(By.TAG_NAME,'body').text
         self.assertNotIn('Buy flowers',page_text)

@@ -7,9 +7,12 @@ def new_list(request):
     return redirect(f'/lists/{list_user.id}/')
 def view_list(request,list_id):
     list_user = List.objects.get(id=list_id)
-    items = Item.objects.filter(list=list_id)
-    return render(request,'list.html', {'items': items})
-
+    return render(request,'list.html', {'list': list_user})
+def add_item(request, list_id):
+    list_user = List.objects.get(id=list_id)
+    Item.objects.create(text=request.POST['item_text'], list=list_user)
+    return redirect(f'/lists/{list_user.id}/')
+    pass
 def home_page(request):
     # if request.method == 'POST':
         # return HttpResponse(request.POST['item_text'])
