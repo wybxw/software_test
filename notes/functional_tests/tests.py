@@ -41,6 +41,9 @@ from lists.models import Item,List
 class NewVisitorTest(StaticLiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Chrome()
+        real_server = os.environ.get('REAL_SERVER')
+        if real_server:
+            self.live_server_url = 'http://'+real_server
     def tearDown(self):
         self.browser.quit()
     def wait_for_row_in_list_table(self,row_text):
