@@ -5,7 +5,7 @@ import unittest
 from selenium.webdriver.common.by import By
 # import os
 # import django
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.common.exceptions import WebDriverException
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'notes.settings')
 # django.setup()
@@ -38,7 +38,7 @@ from lists.models import Item,List
 #         # self.assertEqual(second_saved_item.text,'Item the second')
 #         # self.assertEqual(second_saved_item.list,list_user)
         # pass
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Chrome()
     def tearDown(self):
