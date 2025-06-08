@@ -10,7 +10,7 @@ from selenium.common.exceptions import WebDriverException
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'notes.settings')
 # django.setup()
 MAX_WAIT = 10
-
+import os
 from lists.models import Item,List
 # class ListAndItemModelsTest(LiveServerTestCase):
 #     def test_saving_and_retrieving_items(self):
